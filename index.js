@@ -23,7 +23,7 @@ const options = {
         },
         servers: [
             {
-                url: 'http://localhost:5000',
+                url: process.env.URL+":"+process.env.PORT,
             },
         ],
     },
@@ -264,6 +264,37 @@ app.delete('/etudiants/:id', (req, res) => {
          })
     })  
 })
+
+app.get('/cours/:id', (req, res) => {
+    let { id } = req.params
+    console.log(id);
+    let recup = 'select id_etudiant, matiere from suivi join cours on id_etudiant = id_etudiant where id_etudiant=?';
+    mysql.query(recup, (err, result) => {
+        if (err)
+            res.status(404).json({ code: "ERRRRRRR", message: "NOT FOUND" })
+        res.status(200).json(result)
+        console.log();
+    })
+})
+
+
+//
+
+
+
+
+
+
+
+
+//     app.get('/etudiants', (req, res) => {
+//     let Var = "select * from etudiants" 
+//     mysql.query(Var, (err, result) => {
+//         if (err)
+//             res.status(404).json({ code: "ERR", message: "Not found"});
+//         res.status(200).json(result)
+//     })  
+// })
 
 const port = 5000; 
 //demarer le serveur node
